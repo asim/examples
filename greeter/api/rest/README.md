@@ -1,6 +1,6 @@
-# Go Restful API Example
+# RESTful API Example
 
-This is an example of how to serve REST behind the API using go-restful
+This is an example of how to serve REST behind the API using [go-restful](https://github.com/emicklei/go-restful) or [Gin](https://github.com/gin-gonic/gin)
 
 ## Getting Started
 
@@ -18,8 +18,16 @@ $ go run greeter/server/main.go
 
 ### Run the Greeter API
 
+#### Using go-restful
+
 ```
 $ go run go-restful.go
+Listening on [::]:64738
+```
+
+#### Using Gin
+```
+$ go run gin.go
 Listening on [::]:64738
 ```
 
