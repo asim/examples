@@ -3,9 +3,9 @@ package subscriber
 import (
 	"encoding/json"
 
-	proto "github.com/micro/examples/googlepubsub/Subscriber/proto/example"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro/broker"
+	proto "github.com/ne0z/examples/googlepubsub/Subscriber/proto/example"
 )
 
 func Handler(p broker.Publication) error {

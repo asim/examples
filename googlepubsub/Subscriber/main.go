@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/micro/examples/googlepubsub/Subscriber/subscriber"
+	"github.com/ne0z/examples/googlepubsub/Subscriber/subscriber"
 
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"

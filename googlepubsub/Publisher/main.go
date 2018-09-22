@@ -5,9 +5,9 @@ import (
 	"os"
 
 	"github.com/go-log/log"
-	proto "github.com/micro/examples/googlepubsub/Publisher/proto/example"
 	"github.com/micro/go-micro/broker"
 	"github.com/micro/go-plugins/broker/googlepubsub"
+	proto "github.com/ne0z/examples/googlepubsub/Publisher/proto/example"
 )
 
 func main() {
