@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"github.com/micro/go-log"
 
-	"github.com/micro/examples/template/api/client"
-	example "github.com/micro/examples/template/srv/proto/example"
+	"examples/template/api/client"
+	example "examples/template/srv/proto/example"
 	api "github.com/micro/go-api/proto"
 	"github.com/micro/go-micro/errors"
 )

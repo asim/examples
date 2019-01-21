@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	hello "github.com/micro/examples/greeter/srv/proto/hello"
+	hello "examples/greeter/srv/proto/hello"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-web"
 

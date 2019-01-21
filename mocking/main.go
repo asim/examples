@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"github.com/micro/cli"
-	proto "github.com/micro/examples/helloworld/proto"
-	"github.com/micro/examples/mocking/mock"
+	proto "examples/helloworld/proto"
+	"examples/mocking/mock"
 	"github.com/micro/go-micro"
 )
 

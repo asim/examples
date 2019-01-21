@@ -8,7 +8,7 @@ import (
 
 	"context"
 	"github.com/gorilla/websocket"
-	proto "github.com/micro/examples/stream/server/proto"
+	proto "examples/stream/server/proto"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-web"
 )

@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/hailocab/go-geoindex"
-	"github.com/micro/examples/booking/data"
-	"github.com/micro/examples/booking/srv/geo/proto"
+	"examples/booking/data"
+	"examples/booking/srv/geo/proto"
 
 	"context"
 	"golang.org/x/net/trace"

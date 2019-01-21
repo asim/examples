@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	proto "github.com/micro/examples/greeter/api/rpc/proto/hello"
-	hello "github.com/micro/examples/greeter/srv/proto/hello"
+	proto "examples/greeter/api/rpc/proto/hello"
+	hello "examples/greeter/srv/proto/hello"
 	"github.com/micro/go-micro"
 
 	"context"

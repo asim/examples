@@ -5,7 +5,7 @@ package graphql
 import (
 	context "context"
 
-	proto "github.com/micro/examples/greeter/srv/proto/hello"
+	proto "examples/greeter/srv/proto/hello"
 )
 
 type Resolver struct {

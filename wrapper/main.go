@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"context"
-	proto "github.com/micro/examples/service/proto"
+	proto "examples/service/proto"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/server"
 )

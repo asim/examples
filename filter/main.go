@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/micro/examples/filter/version"
-	proto "github.com/micro/examples/service/proto"
+	"examples/filter/version"
+	proto "examples/service/proto"
 	"github.com/micro/go-micro"
 )
 

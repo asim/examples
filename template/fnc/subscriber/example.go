@@ -5,7 +5,7 @@ import (
 
 	"github.com/micro/go-log"
 
-	example "github.com/micro/examples/template/fnc/proto/example"
+	example "examples/template/fnc/proto/example"
 )
 
 type Example struct{}

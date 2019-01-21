@@ -9,24 +9,24 @@ Find out more on the usage at [micro/new](https://github.com/micro/micro/tree/ma
 ### API
 
 ```
-micro new --type api --alias template github.com/micro/examples/template/api
+micro new --type api --alias template examples/template/api
 ```
 
 ### FNC
 
 ```
-micro new --type fnc --alias template github.com/micro/examples/template/fnc
+micro new --type fnc --alias template examples/template/fnc
 ```
 
 ### SRV
 
 ```
-micro new --type srv --alias template github.com/micro/examples/template/srv
+micro new --type srv --alias template examples/template/srv
 ```
 
 ### WEB
 
 ```
-micro new --type web --alias template github.com/micro/examples/template/web
+micro new --type web --alias template examples/template/web
 ```
 

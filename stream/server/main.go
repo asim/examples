@@ -6,7 +6,7 @@ import (
 	"context"
 	"github.com/micro/go-micro"
 
-	proto "github.com/micro/examples/stream/server/proto"
+	proto "examples/stream/server/proto"
 )
 
 type Streamer struct{}

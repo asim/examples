@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"context"
-	"github.com/micro/examples/server/handler"
-	"github.com/micro/examples/server/subscriber"
+	"examples/server/handler"
+	"examples/server/subscriber"
 	"github.com/micro/go-micro/cmd"
 	"github.com/micro/go-micro/server"
 )

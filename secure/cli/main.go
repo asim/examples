@@ -6,7 +6,7 @@ import (
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/transport"
 
-	hello "github.com/micro/examples/greeter/srv/proto/hello"
+	hello "examples/greeter/srv/proto/hello"
 
 	"context"
 )

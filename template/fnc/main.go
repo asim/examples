@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/micro/examples/template/fnc/handler"
-	"github.com/micro/examples/template/fnc/subscriber"
+	"examples/template/fnc/handler"
+	"examples/template/fnc/subscriber"
 	"github.com/micro/go-log"
 	"github.com/micro/go-micro"
 )

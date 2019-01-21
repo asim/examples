@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"context"
-	example "github.com/micro/examples/server/proto/example"
+	example "examples/server/proto/example"
 	"github.com/micro/go-micro"
 	"github.com/micro/go-micro/client"
 	"github.com/micro/go-micro/metadata"

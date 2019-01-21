@@ -3,7 +3,7 @@ package handler
 import (
 	"log"
 
-	example "github.com/micro/examples/server/proto/example"
+	example "examples/server/proto/example"
 	"github.com/micro/go-micro/metadata"
 	"github.com/micro/go-micro/server"
 

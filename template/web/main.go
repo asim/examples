@@ -4,7 +4,7 @@ import (
 	"github.com/micro/go-log"
 	"net/http"
 
-	"github.com/micro/examples/template/web/handler"
+	"examples/template/web/handler"
 	"github.com/micro/go-web"
 )
 

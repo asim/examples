@@ -5,8 +5,8 @@ import (
 	"github.com/micro/go-micro/client"
 
 	"github.com/99designs/gqlgen/handler"
-	gql "github.com/micro/examples/greeter/api/graphql/graphql"
-	helloProto "github.com/micro/examples/greeter/srv/proto/hello"
+	gql "examples/greeter/api/graphql/graphql"
+	helloProto "examples/greeter/srv/proto/hello"
 	web "github.com/micro/go-web"
 )
 
