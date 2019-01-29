@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"net/http"
 
 	"context"
@@ -13,7 +14,7 @@ import (
 )
 
 var (
-	// the go.micro.srv.greeter address
+	// 声明greeter的地址，服务名规则见https://micro.mu/docs/faq_cn.html#srv-服务
 	endpoint = flag.String("endpoint", "localhost:9090", "go.micro.srv.greeter address")
 )
 
@@ -30,6 +31,7 @@ func run() error {
 		return err
 	}
 
+	fmt.Println("网关服务已启动...")
 	return http.ListenAndServe(":8080", mux)
 }
 

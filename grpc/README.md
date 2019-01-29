@@ -1,32 +1,35 @@
 # GRPC
 
-Contains examples for using [go-grpc](https://github.com/micro/go-grpc)
+该目录下包含使用[go-grpc](https://github.com/micro/go-grpc)的例子。
 
-- [greeter](greeter) - A greeter example
-- [gateway](gateway) - A grpc gateway example
-- [sidecar](sidecar) - Using the micro sidecar for http
+- [greeter](greeter) - 问候程序示例
+- [gateway](gateway) - gRPC网关示例
+- [sidecar](sidecar) -【未完成】通过micro sidecar（挎斗，一种设计模式）来提供HTTP服务
 
-## New service
+## 新建服务
 
-Check out the [greeter](greeter) example using go-grpc
+签出[greeter](greeter)示例，里面使用了go-grpc
 
-### Import go-grpc
+### 导入 go-grpc
 
 ```
 import "github.com/micro/go-grpc"
 ```
 
-### Create micro.Service
+### 创建micro.Service服务
 
 ```
 service := grpc.NewService()
 ```
 
-## Pre-existing Service
+## 已有服务
 
-What if you want to add grpc to a pre-existing service? Use the build pattern for plugins but swap out the client/server.
+如果要在已有服务中增加grpc该怎么弄？使用plugin的[build构建模式](https://github.com/micro/examples/tree/cn-lang/plugins/#build-pattern)，
+但是要把client/server换掉，下面的例子只是为了演示如何声明客户端与服务端，真实情况可能是二者皆有或中有其一，且一般不写在plugins.go里。
 
-### Create a plugin file
+### 创建插件文件
+
+创建插件文件plugins.go，它主要用来引入插件
 
 ```
 package main
@@ -39,23 +42,23 @@ import (
 )
 
 func init() {
-	// set the default client
+	// 设置默认的客户端
 	client.DefaultClient = cli.NewClient()
-	// set the default server
+	// 设置默认的服务端
 	server.DefaultServer = srv.NewServer()
 }
 ```
 
-### Build the binary
+### 编译成二进制
 
 ```
-// For local use
+// 本地运行编译
 go build -i -o service ./main.go ./plugins.go
 ```
 
-### Run
+### 运行
 
-Because the default client/server have been replaced we can just run as usual
+因为client/server已经被换掉了，所以可以直接像平常应用一样执行
 
 ```
 ./service

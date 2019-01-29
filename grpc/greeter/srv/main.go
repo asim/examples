@@ -14,8 +14,8 @@ import (
 type Say struct{}
 
 func (s *Say) Hello(ctx context.Context, req *hello.Request, rsp *hello.Response) error {
-	log.Print("Received Say.Hello request")
-	rsp.Msg = "Hello " + req.Name
+	log.Print("收到问候请求")
+	rsp.Msg = "你好呀！" + req.Name
 	return nil
 }
 

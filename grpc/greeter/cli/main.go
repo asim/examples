@@ -14,17 +14,18 @@ func main() {
 	service := grpc.NewService()
 	service.Init()
 
-	// use the generated client stub
+	// 使用模板生成的方法存根
 	cl := hello.NewSayService("go.micro.srv.greeter", service.Client())
 
-	// Set arbitrary headers in context
+	// 元数据头可以任意设置
 	ctx := metadata.NewContext(context.Background(), map[string]string{
 		"X-User-Id": "john",
 		"X-From-Id": "script",
 	})
 
+	// 随意声明请求问候的人
 	rsp, err := cl.Hello(ctx, &hello.Request{
-		Name: "John",
+		Name: "皮皮",
 	})
 	if err != nil {
 		fmt.Println(err)
