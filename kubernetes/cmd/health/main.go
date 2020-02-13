@@ -10,7 +10,7 @@ import (
 	"github.com/micro/go-micro/client"
 	gcli "github.com/micro/go-micro/client/grpc"
 	"github.com/micro/go-micro/config/cmd"
-	proto "github.com/micro/go-micro/debug/proto"
+	proto "github.com/micro/go-micro/debug/service/proto"
 	"github.com/micro/go-micro/util/log"
 	_ "github.com/micro/go-plugins/registry/kubernetes"
 )

@@ -27,13 +27,13 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway v1.12.1
 	github.com/hailocab/go-geoindex v0.0.0-20160127134810-64631bfe9711
 	github.com/micro/cli v0.2.0
-	github.com/micro/go-micro v1.15.1
+	github.com/micro/go-micro v1.18.0
 	github.com/micro/go-plugins v1.4.0
 	github.com/micro/micro v1.15.1
 	github.com/pborman/uuid v1.2.0
 	github.com/shiena/ansicolor v0.0.0-20151119151921-a422bbe96644 // indirect
 	github.com/vektah/gqlparser v1.2.0
-	golang.org/x/net v0.0.0-20191108063844-7e6e90b9ea88
-	google.golang.org/genproto v0.0.0-20191028173616-919d9bdd9fe6
-	google.golang.org/grpc v1.25.0
+	golang.org/x/net v0.0.0-20191109021931-daa7c04131f5
+	google.golang.org/genproto v0.0.0-20191108220845-16a3f7862a1a
+	google.golang.org/grpc v1.25.1
 )
