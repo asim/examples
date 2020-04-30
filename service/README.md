@@ -18,7 +18,7 @@ go run main.go
 Run the client
 
 ```shell
-go run main.go --run_client
+go run main.go --run-client
 ```
 
 And that's all there is to it.
