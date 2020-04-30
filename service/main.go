@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"context"
+
 	"github.com/micro/cli/v2"
 	proto "github.com/micro/examples/service/proto"
 	"github.com/micro/go-micro/v2"
@@ -48,12 +49,12 @@ func main() {
 			"type": "helloworld",
 		}),
 
-		// Setup some flags. Specify --run_client to run the client
+		// Setup some flags. Specify --run-client to run the client
 
 		// Add runtime flags
 		// We could do this below too
 		micro.Flags(&cli.BoolFlag{
-			Name:  "run_client",
+			Name:  "run-client",
 			Usage: "Launch the client",
 		}),
 	)
@@ -65,7 +66,7 @@ func main() {
 		// Add runtime action
 		// We could actually do this above
 		micro.Action(func(c *cli.Context) error {
-			if c.Bool("run_client") {
+			if c.Bool("run-client") {
 				runClient(service)
 				os.Exit(0)
 			}
