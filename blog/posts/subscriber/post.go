@@ -3,7 +3,7 @@ package subscriber
 import (
 	"context"
 
-	post "github.com/micro/examples/blog/post/proto/post"
+	post "github.com/micro/examples/blog/posts/proto/posts"
 )
 
 type Post struct{}

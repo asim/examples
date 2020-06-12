@@ -2,7 +2,7 @@ module github.com/micro/examples/blog/posts
 
 go 1.13
 
-replace github.com/micro/examples/blog/tags => github.com/micro/examples/blog/tags blog-fixing
+replace github.com/micro/examples/blog/tags => github.com/micro/examples/blog/tags v0.0.0-20200612095442-c180b6c3b5f6
 
 replace google.golang.org/grpc => google.golang.org/grpc v1.26.0
 
