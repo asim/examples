@@ -8,8 +8,8 @@ import (
 	"strings"
 
 	"github.com/lithammer/shortuuid/v3"
-	templ "github.com/micro/examples/blog/blog-web/templates"
-	postproto "github.com/micro/examples/blog/post/proto/post"
+	postsproto "github.com/micro/examples/blog/posts/proto/posts"
+	templ "github.com/micro/examples/blog/web/templates"
 	"github.com/micro/go-micro/v2/client"
 	log "github.com/micro/go-micro/v2/logger"
 )
@@ -19,8 +19,8 @@ type Handler struct {
 }
 
 func (h Handler) Index(w http.ResponseWriter, r *http.Request) {
-	request := h.Client.NewRequest("go.micro.service.post", "PostService.Query", &postproto.QueryRequest{})
-	rsp := &postproto.QueryResponse{}
+	request := h.Client.NewRequest("go.micro.service.post", "PostService.Query", &postsproto.QueryRequest{})
+	rsp := &postsproto.QueryResponse{}
 	if err := h.Client.Call(r.Context(), request, rsp); err != nil {
 		fmt.Println("err", err)
 		http.Error(w, err.Error(), 500)
@@ -52,10 +52,10 @@ func (h Handler) Post(w http.ResponseWriter, r *http.Request) {
 	slug := strings.Split(pastPostFragments[1], "/")[0]
 	log.Infof("Getting post by slug: %v, for path: %v", slug, r.URL.Path)
 
-	request := h.Client.NewRequest("go.micro.service.post", "PostService.Query", &postproto.QueryRequest{
+	request := h.Client.NewRequest("go.micro.service.post", "PostService.Query", &postsproto.QueryRequest{
 		Slug: slug,
 	})
-	rsp := &postproto.QueryResponse{}
+	rsp := &postsproto.QueryResponse{}
 	if err := h.Client.Call(r.Context(), request, rsp); err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -106,10 +106,10 @@ func (h Handler) EditPost(w http.ResponseWriter, r *http.Request) {
 	pastPostFragments := strings.Split(r.URL.Path, "edit/")
 	slug := strings.Split(pastPostFragments[1], "/")[0]
 
-	request := h.Client.NewRequest("go.micro.service.post", "PostService.Query", &postproto.QueryRequest{
+	request := h.Client.NewRequest("go.micro.service.post", "PostService.Query", &postsproto.QueryRequest{
 		Slug: slug,
 	})
-	rsp := &postproto.QueryResponse{}
+	rsp := &postsproto.QueryResponse{}
 	if err := h.Client.Call(r.Context(), request, rsp); err != nil {
 		fmt.Println("err", err)
 		http.Error(w, err.Error(), 500)
@@ -161,15 +161,15 @@ func (h Handler) PostAPI(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Infof("Creating post with id and title %v: %v", title)
-	request := h.Client.NewRequest("go.micro.service.post", "PostService.Post", &postproto.PostRequest{
-		Post: &postproto.Post{
+	request := h.Client.NewRequest("go.micro.service.post", "PostService.Post", &postsproto.PostRequest{
+		Post: &postsproto.Post{
 			Id:       id,
 			Title:    title,
 			Content:  content,
 			TagNames: tagNames,
 		},
 	})
-	rsp := &postproto.PostResponse{}
+	rsp := &postsproto.PostResponse{}
 	if err := h.Client.Call(r.Context(), request, rsp); err != nil {
 		fmt.Println("Error creating post: ", err)
 		http.Error(w, err.Error(), 500)

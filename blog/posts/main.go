@@ -1,20 +1,20 @@
 package main
 
 import (
-	"github.com/micro/examples/blog/post/handler"
-	"github.com/micro/examples/blog/post/subscriber"
+	"github.com/micro/examples/blog/posts/handler"
+	"github.com/micro/examples/blog/posts/subscriber"
 
 	"github.com/micro/go-micro/v2"
 
 	log "github.com/micro/go-micro/v2/logger"
 
-	post "github.com/micro/examples/blog/post/proto/post"
+	posts "github.com/micro/examples/blog/posts/proto/posts"
 )
 
 func main() {
 	// New Service
 	service := micro.NewService(
-		micro.Name("go.micro.service.post"),
+		micro.Name("go.micro.service.posts"),
 		micro.Version("latest"),
 	)
 
@@ -22,13 +22,13 @@ func main() {
 	service.Init()
 
 	// Register Handler
-	post.RegisterPostServiceHandler(service.Server(), &handler.PostService{
+	posts.RegisterPostsHandler(service.Server(), &handler.Posts{
 		Store:  service.Options().Store,
 		Client: service.Client(),
 	})
 
 	// Register Struct as Subscriber
-	micro.RegisterSubscriber("go.micro.service.post", service.Server(), new(subscriber.Post))
+	micro.RegisterSubscriber("go.micro.service.posts", service.Server(), new(subscriber.Post))
 
 	// Run service
 	if err := service.Run(); err != nil {

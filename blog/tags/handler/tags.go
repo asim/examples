@@ -9,7 +9,7 @@ import (
 	log "github.com/micro/go-micro/v2/logger"
 	"github.com/micro/go-micro/v2/store"
 
-	tag "github.com/micro/examples/blog/tag/proto/tag"
+	tags "github.com/micro/examples/blog/tags/proto/tags"
 
 	"github.com/gosimple/slug"
 )
@@ -27,11 +27,11 @@ type Tag struct {
 	Count    int64  `json:"count"`
 }
 
-type TagService struct {
+type Tags struct {
 	Store store.Store
 }
 
-func (t *TagService) IncreaseCount(ctx context.Context, req *tag.IncreaseCountRequest, rsp *tag.IncreaseCountResponse) error {
+func (t *Tags) IncreaseCount(ctx context.Context, req *tags.IncreaseCountRequest, rsp *tags.IncreaseCountResponse) error {
 	if len(req.ParentID) == 0 || len(req.Type) == 0 {
 		return errors.New("parent id and type is required")
 	}
@@ -66,7 +66,7 @@ func (t *TagService) IncreaseCount(ctx context.Context, req *tag.IncreaseCountRe
 	return t.saveTag(tag)
 }
 
-func (t *TagService) saveTag(tag *Tag) error {
+func (t *Tags) saveTag(tag *Tag) error {
 	tagSlug := slug.Make(tag.Title)
 
 	parentID := fmt.Sprintf("%v:%v:%v", parentPrefix, tag.ParentID, tagSlug)
@@ -93,7 +93,7 @@ func (t *TagService) saveTag(tag *Tag) error {
 	})
 }
 
-func (t *TagService) DecreaseCount(ctx context.Context, req *tag.DecreaseCountRequest, rsp *tag.DecreaseCountResponse) error {
+func (t *Tags) DecreaseCount(ctx context.Context, req *tags.DecreaseCountRequest, rsp *tags.DecreaseCountResponse) error {
 	if len(req.ParentID) == 0 || len(req.Type) == 0 {
 		return errors.New("parent id and type is required")
 	}
@@ -126,8 +126,8 @@ func (t *TagService) DecreaseCount(ctx context.Context, req *tag.DecreaseCountRe
 	return t.saveTag(tag)
 }
 
-func (t *TagService) List(ctx context.Context, req *tag.ListRequest, rsp *tag.ListResponse) error {
-	log.Info("Received Tag.List request")
+func (t *Tags) List(ctx context.Context, req *tags.ListRequest, rsp *tags.ListResponse) error {
+	log.Info("Received tags.List request")
 	key := ""
 	if len(req.ParentID) > 0 {
 		key = fmt.Sprintf("%v:%v", parentPrefix, req.ParentID)
@@ -141,14 +141,14 @@ func (t *TagService) List(ctx context.Context, req *tag.ListRequest, rsp *tag.Li
 	if err != nil {
 		return err
 	}
-	rsp.Tags = make([]*tag.Tag, len(records))
+	rsp.Tags = make([]*tags.Tag, len(records))
 	for i, record := range records {
 		tagRecord := &Tag{}
 		err := json.Unmarshal(record.Value, tagRecord)
 		if err != nil {
 			return err
 		}
-		rsp.Tags[i] = &tag.Tag{
+		rsp.Tags[i] = &tags.Tag{
 			ParentID: tagRecord.ParentID,
 			Title:    tagRecord.Title,
 			Type:     tagRecord.Type,
@@ -159,7 +159,7 @@ func (t *TagService) List(ctx context.Context, req *tag.ListRequest, rsp *tag.Li
 	return nil
 }
 
-func (t *TagService) Update(ctx context.Context, req *tag.UpdateRequest, rsp *tag.UpdateResponse) error {
+func (t *Tags) Update(ctx context.Context, req *tags.UpdateRequest, rsp *tags.UpdateResponse) error {
 	if len(req.ParentID) == 0 || len(req.Type) == 0 {
 		return errors.New("parent id and type is required")
 	}

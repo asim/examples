@@ -1,19 +1,19 @@
 package main
 
 import (
-	"github.com/micro/examples/blog/tag/handler"
-	"github.com/micro/examples/blog/tag/subscriber"
+	"github.com/micro/examples/blog/tags/handler"
+	"github.com/micro/examples/blog/tags/subscriber"
 
 	"github.com/micro/go-micro/v2"
 	log "github.com/micro/go-micro/v2/logger"
 
-	tag "github.com/micro/examples/blog/tag/proto/tag"
+	tags "github.com/micro/examples/blog/tags/proto/tags"
 )
 
 func main() {
-	// New Service
+	// New Serviceost
 	service := micro.NewService(
-		micro.Name("go.micro.service.tag"),
+		micro.Name("go.micro.service.tags"),
 		micro.Version("latest"),
 	)
 
@@ -21,12 +21,12 @@ func main() {
 	service.Init()
 
 	// Register Handler
-	tag.RegisterTagServiceHandler(service.Server(), &handler.TagService{
+	tags.RegisterTagsHandler(service.Server(), &handler.Tags{
 		Store: service.Options().Store,
 	})
 
 	// Register Struct as Subscriber
-	micro.RegisterSubscriber("go.micro.service.tag", service.Server(), new(subscriber.Tag))
+	micro.RegisterSubscriber("go.micro.service.tags", service.Server(), new(subscriber.Tags))
 
 	// Run service
 	if err := service.Run(); err != nil {

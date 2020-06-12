@@ -8,14 +8,14 @@ import (
 	"math"
 	"time"
 
-	tagProto "github.com/micro/examples/blog/tag/proto/tag"
+	tagProto "github.com/micro/examples/blog/tags/proto/tags"
 
 	"github.com/gosimple/slug"
 	"github.com/micro/go-micro/v2/client"
 	log "github.com/micro/go-micro/v2/logger"
 	"github.com/micro/go-micro/v2/store"
 
-	post "github.com/micro/examples/blog/post/proto/post"
+	posts "github.com/micro/examples/blog/posts/proto/posts"
 )
 
 const (
@@ -35,12 +35,12 @@ type Post struct {
 	TagNames        []string `json:"tagNames"`
 }
 
-type PostService struct {
+type Posts struct {
 	Store  store.Store
 	Client client.Client
 }
 
-func (t *PostService) Post(ctx context.Context, req *post.PostRequest, rsp *post.PostResponse) error {
+func (t *Posts) Post(ctx context.Context, req *posts.PostRequest, rsp *posts.PostResponse) error {
 	if len(req.Post.Id) == 0 || len(req.Post.Title) == 0 || len(req.Post.Content) == 0 {
 		return errors.New("ID, title or content is missing")
 	}
@@ -96,7 +96,7 @@ func (t *PostService) Post(ctx context.Context, req *post.PostRequest, rsp *post
 	return t.savePost(ctx, oldPost, post)
 }
 
-func (t *PostService) savePost(ctx context.Context, oldPost, post *Post) error {
+func (t *Posts) savePost(ctx context.Context, oldPost, post *Post) error {
 	bytes, err := json.Marshal(post)
 	if err != nil {
 		return err
@@ -131,7 +131,7 @@ func (t *PostService) savePost(ctx context.Context, oldPost, post *Post) error {
 		return err
 	}
 	if oldPost == nil {
-		tagClient := tagProto.NewTagService("go.micro.service.tag", t.Client)
+		tagClient := tagProto.NewTagsService("go.micro.service.tag", t.Client)
 		for _, tagName := range post.TagNames {
 			_, err := tagClient.IncreaseCount(ctx, &tagProto.IncreaseCountRequest{
 				ParentID: post.ID,
@@ -147,7 +147,7 @@ func (t *PostService) savePost(ctx context.Context, oldPost, post *Post) error {
 	return t.diffTags(ctx, oldPost.ID, oldPost.TagNames, post.TagNames)
 }
 
-func (t *PostService) diffTags(ctx context.Context, parentID string, oldTagNames, newTagNames []string) error {
+func (t *Posts) diffTags(ctx context.Context, parentID string, oldTagNames, newTagNames []string) error {
 	oldTags := map[string]struct{}{}
 	for _, v := range oldTagNames {
 		oldTags[v] = struct{}{}
@@ -156,7 +156,7 @@ func (t *PostService) diffTags(ctx context.Context, parentID string, oldTagNames
 	for _, v := range newTagNames {
 		newTags[v] = struct{}{}
 	}
-	tagClient := tagProto.NewTagService("go.micro.service.tag", t.Client)
+	tagClient := tagProto.NewTagsService("go.micro.service.tag", t.Client)
 	for i := range oldTags {
 		_, stillThere := newTags[i]
 		if !stillThere {
@@ -180,7 +180,7 @@ func (t *PostService) diffTags(ctx context.Context, parentID string, oldTagNames
 	return nil
 }
 
-func (t *PostService) Query(ctx context.Context, req *post.QueryRequest, rsp *post.QueryResponse) error {
+func (t *Posts) Query(ctx context.Context, req *posts.QueryRequest, rsp *posts.QueryResponse) error {
 	var records []*store.Record
 	var err error
 	if len(req.Slug) > 0 {
@@ -203,14 +203,14 @@ func (t *PostService) Query(ctx context.Context, req *post.QueryRequest, rsp *po
 	if err != nil {
 		return err
 	}
-	rsp.Posts = make([]*post.Post, len(records))
+	rsp.Posts = make([]*posts.Post, len(records))
 	for i, record := range records {
 		postRecord := &Post{}
 		err := json.Unmarshal(record.Value, postRecord)
 		if err != nil {
 			return err
 		}
-		rsp.Posts[i] = &post.Post{
+		rsp.Posts[i] = &posts.Post{
 			Id:       postRecord.ID,
 			Title:    postRecord.Title,
 			Slug:     postRecord.Slug,
@@ -221,7 +221,7 @@ func (t *PostService) Query(ctx context.Context, req *post.QueryRequest, rsp *po
 	return nil
 }
 
-func (t *PostService) Delete(ctx context.Context, req *post.DeleteRequest, rsp *post.DeleteResponse) error {
+func (t *Posts) Delete(ctx context.Context, req *posts.DeleteRequest, rsp *posts.DeleteResponse) error {
 	log.Info("Received Post.Delete request")
 	return t.Store.Delete(fmt.Sprintf("%v:%v", slugPrefix, req.Slug))
 }

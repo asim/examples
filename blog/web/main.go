@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/micro/examples/blog/blog-web/handler"
+	"github.com/micro/examples/blog/web/handler"
 
 	log "github.com/micro/go-micro/v2/logger"
 	"github.com/micro/go-micro/v2/web"
@@ -10,7 +10,7 @@ import (
 func main() {
 	// create new web service
 	service := web.NewService(
-		web.Name("go.micro.web.blog-example"),
+		web.Name("go.micro.web.blog"),
 		web.Version("latest"),
 	)
 
