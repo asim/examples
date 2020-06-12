@@ -242,9 +242,7 @@ github.com/matttproud/golang_protobuf_extensions v1.0.1/go.mod h1:D8He9yQNgCq6Z5
 github.com/micro/cli/v2 v2.1.2 h1:43J1lChg/rZCC1rvdqZNFSQDrGT7qfMrtp6/ztpIkEM=
 github.com/micro/cli/v2 v2.1.2/go.mod h1:EguNh6DAoWKm9nmk+k/Rg0H3lQnDxqzu5x5srOtGtYg=
 github.com/micro/examples v0.2.0 h1:gSOBrHxEn1N36NMs1CnCdU3UxifRO+IGDAm4wvFNwkU=
-github.com/micro/examples v0.2.1-0.20200612095442-c180b6c3b5f6 h1:HwTZuM28guZoufzZLG+6dhaaXGENVq3E4jDIn8y7kOA=
-github.com/micro/examples/blog/posts v0.0.0-20200612095442-c180b6c3b5f6 h1:P2p4kzhqqiA1mt2bBZFK2B8O6wHIJPL3VSxO5kURN58=
-github.com/micro/examples/blog/tags v0.0.0-20200612095442-c180b6c3b5f6 h1:QoHhWbicAQumSNJAA+Eo8jE2upBxka7wXzPFmFwjhZ4=
+github.com/micro/examples/blog/tags v0.0.0-20200612113900-9e7a28368d7c h1:+iY4FvMx/YMSedS3htGQfhbZmLUArAm25zccB/nHFxs=
 github.com/micro/go-micro/v2 v2.8.0 h1:WKogg6xqJmk3CjTFscrzSKN1fSGtince4sWfaqx9844=
 github.com/micro/go-micro/v2 v2.8.0/go.mod h1:hSdOM6jb6aGswjBpCeB9wJ0yVH+CugevRm/CX7NlSrQ=
 github.com/miekg/dns v1.1.15/go.mod h1:W1PPwlIAgtquWBMBEV9nkV9Cazfe8ScdGz/Lj7v3Nrg=
