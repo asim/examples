@@ -45,7 +45,7 @@ func (t *Posts) Post(ctx context.Context, req *posts.PostRequest, rsp *posts.Pos
 		return errors.New("ID, title or content is missing")
 	}
 
-	// read by parent ID + slug, the record is identical in boths places anyway
+	// read by post
 	records, err := t.Store.Read(fmt.Sprintf("%v:%v", idPrefix, req.Post.Id))
 	if err != nil && err != store.ErrNotFound {
 		return err
@@ -223,5 +223,29 @@ func (t *Posts) Query(ctx context.Context, req *posts.QueryRequest, rsp *posts.Q
 
 func (t *Posts) Delete(ctx context.Context, req *posts.DeleteRequest, rsp *posts.DeleteResponse) error {
 	log.Info("Received Post.Delete request")
-	return t.Store.Delete(fmt.Sprintf("%v:%v", slugPrefix, req.Slug))
+	records, err := t.Store.Read(fmt.Sprintf("%v:%v", idPrefix, req.Id))
+	if err != nil && err != store.ErrNotFound {
+		return err
+	}
+	if len(records) == 0 {
+		return fmt.Errorf("Post with ID %v not found", req.Id)
+	}
+	post := &Post{}
+	err = json.Unmarshal(records[0].Value, post)
+	if err != nil {
+		return err
+	}
+
+	// Delete by ID
+	err = t.Store.Delete(fmt.Sprintf("%v:%v", idPrefix, post.ID))
+	if err != nil {
+		return err
+	}
+	// Delete by slug
+	err = t.Store.Delete(fmt.Sprintf("%v:%v", slugPrefix, post.Slug))
+	if err != nil {
+		return err
+	}
+	// Delete by timeStamp
+	return t.Store.Delete(fmt.Sprintf("%v:%v", timeStampPrefix, post.CreateTimestamp))
 }
