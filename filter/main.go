@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/micro/examples/filter/version"
+	"github.com/micro/examples/filter/network"
 	proto "github.com/micro/examples/service/proto"
 	"github.com/micro/go-micro/v2"
 )
@@ -21,7 +21,7 @@ func main() {
 		// provide the request
 		&proto.Request{Name: "John"},
 		// set the filter
-		version.Filter("latest"),
+		network.Filter("micro"),
 	)
 	if err != nil {
 		fmt.Println(err)

@@ -8,7 +8,7 @@ import (
 	hello "github.com/micro/examples/greeter/srv/proto/hello"
 	"github.com/micro/go-micro/v2"
 	"github.com/micro/go-micro/v2/errors"
-	roundrobin "github.com/micro/go-plugins/wrapper/select/roundrobin/v2"
+	"github.com/micro/go-micro/v2/selector/roundrobin"
 	api "github.com/micro/micro/v2/api/proto"
 
 	"context"
@@ -43,11 +43,9 @@ func (s *Say) Hello(ctx context.Context, req *api.Request, rsp *api.Response) er
 }
 
 func main() {
-	wrapper := roundrobin.NewClientWrapper()
-
 	service := micro.NewService(
 		micro.Name("go.micro.api.greeter"),
-		micro.WrapClient(wrapper),
+		micro.Selector(roundrobin.NewSelector()),
 	)
 
 	// parse command line flags

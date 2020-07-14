@@ -4,13 +4,12 @@ import (
 	"context"
 	"fmt"
 	"math/rand"
-	"sync"
 	"time"
 
 	"github.com/micro/go-micro/v2/client"
-	"github.com/micro/go-micro/v2/client/selector"
 	"github.com/micro/go-micro/v2/config/cmd"
-	"github.com/micro/go-micro/v2/registry"
+	"github.com/micro/go-micro/v2/router"
+	"github.com/micro/go-micro/v2/selector"
 
 	example "github.com/micro/examples/server/proto/example"
 )
@@ -39,48 +38,19 @@ func (n *dcSelector) Options() selector.Options {
 	return n.opts
 }
 
-func (n *dcSelector) Select(service string, opts ...selector.SelectOption) (selector.Next, error) {
-	services, err := n.opts.Registry.GetService(service)
-	if err != nil {
-		return nil, err
-	}
-
-	if len(services) == 0 {
-		return nil, selector.ErrNotFound
-	}
-
-	var nodes []*registry.Node
-
-	// Filter the nodes for datacenter
-	for _, service := range services {
-		for _, node := range service.Nodes {
-			if node.Metadata["datacenter"] == datacenter {
-				nodes = append(nodes, node)
-			}
+func (n *dcSelector) Select(routes []router.Route, opts ...selector.SelectOption) (*router.Route, error) {
+	// Filter the nodes for datacenter {
+	for _, r := range routes {
+		if r.Metadata["datacenter"] == datacenter {
+			return &r, nil
 		}
 	}
 
-	if len(nodes) == 0 {
-		return nil, selector.ErrNotFound
-	}
-
-	var i int
-	var mtx sync.Mutex
-
-	return func() (*registry.Node, error) {
-		mtx.Lock()
-		defer mtx.Unlock()
-		i++
-		return nodes[i%len(nodes)], nil
-	}, nil
+	return nil, selector.ErrNoneAvailable
 }
 
-func (n *dcSelector) Mark(service string, node *registry.Node, err error) {
-	return
-}
-
-func (n *dcSelector) Reset(service string) {
-	return
+func (n *dcSelector) Record(router.Route, error) error {
+	return nil
 }
 
 func (n *dcSelector) Close() error {
@@ -91,14 +61,11 @@ func (n *dcSelector) String() string {
 	return "dc"
 }
 
-// Return a new first node selector
+// Return a new selector
 func DCSelector(opts ...selector.Option) selector.Selector {
 	var sopts selector.Options
 	for _, opt := range opts {
 		opt(&sopts)
-	}
-	if sopts.Registry == nil {
-		sopts.Registry = registry.DefaultRegistry
 	}
 	return &dcSelector{sopts}
 }

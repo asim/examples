@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/micro/go-micro/v2/client"
-	"github.com/micro/go-micro/v2/client/selector"
 	"github.com/micro/go-micro/v2/config/cmd"
 	"github.com/micro/go-micro/v2/metadata"
-	"github.com/micro/go-micro/v2/registry"
+	"github.com/micro/go-micro/v2/router"
+	"github.com/micro/go-micro/v2/selector"
 
 	example "github.com/micro/examples/server/proto/example"
 )
@@ -27,22 +27,19 @@ type dcWrapper struct {
 func (dc *dcWrapper) Call(ctx context.Context, req client.Request, rsp interface{}, opts ...client.CallOption) error {
 	md, _ := metadata.FromContext(ctx)
 
-	filter := func(services []*registry.Service) []*registry.Service {
-		for _, service := range services {
-			var nodes []*registry.Node
-			for _, node := range service.Nodes {
-				if node.Metadata["datacenter"] == md["datacenter"] {
-					nodes = append(nodes, node)
-				}
+	filter := func(routes []router.Route) []router.Route {
+		var result []router.Route
+
+		for _, r := range routes {
+			if r.Metadata["datacenter"] == md["datacenter"] {
+				result = append(result, r)
 			}
-			service.Nodes = nodes
 		}
-		return services
+
+		return result
 	}
 
-	callOptions := append(opts, client.WithSelectOption(
-		selector.WithFilter(filter),
-	))
+	callOptions := append(opts, client.WithSelectOptions(selector.WithFilter(filter)))
 
 	fmt.Printf("[DC Wrapper] filtering for datacenter %s\n", md["datacenter"])
 	return dc.Client.Call(ctx, req, rsp, callOptions...)
