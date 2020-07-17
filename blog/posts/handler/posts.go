@@ -9,7 +9,6 @@ import (
 	"time"
 
 	tagProto "github.com/micro/examples/blog/tags/proto/tags"
-	"github.com/netdata/go-orchestrator/logger"
 
 	"github.com/gosimple/slug"
 	"github.com/micro/go-micro/v2/client"
@@ -167,7 +166,7 @@ func (t *Posts) diffTags(ctx context.Context, parentID string, oldTagNames, newT
 				Title:    i,
 			})
 			if err != nil {
-				logger.Errorf("Error decreasing count for tag '%v' with type '%v' for parent '%v'", i, tagType, parentID)
+				log.Errorf("Error decreasing count for tag '%v' with type '%v' for parent '%v'", i, tagType, parentID)
 			}
 		}
 	}
@@ -180,7 +179,7 @@ func (t *Posts) diffTags(ctx context.Context, parentID string, oldTagNames, newT
 				Title:    i,
 			})
 			if err != nil {
-				logger.Errorf("Error increasing count for tag '%v' with type '%v' for parent '%v'", i, tagType, parentID)
+				log.Errorf("Error increasing count for tag '%v' with type '%v' for parent '%v'", i, tagType, parentID)
 			}
 		}
 	}
