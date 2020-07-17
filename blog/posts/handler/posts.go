@@ -9,6 +9,7 @@ import (
 	"time"
 
 	tagProto "github.com/micro/examples/blog/tags/proto/tags"
+	"github.com/netdata/go-orchestrator/logger"
 
 	"github.com/gosimple/slug"
 	"github.com/micro/go-micro/v2/client"
@@ -160,21 +161,27 @@ func (t *Posts) diffTags(ctx context.Context, parentID string, oldTagNames, newT
 	for i := range oldTags {
 		_, stillThere := newTags[i]
 		if !stillThere {
-			tagClient.DecreaseCount(ctx, &tagProto.DecreaseCountRequest{
+			_, err := tagClient.DecreaseCount(ctx, &tagProto.DecreaseCountRequest{
 				ParentID: parentID,
 				Type:     tagType,
 				Title:    i,
 			})
+			if err != nil {
+				logger.Errorf("Error decreasing count for tag '%v' with type '%v' for parent '%v'", i, tagType, parentID)
+			}
 		}
 	}
 	for i := range newTags {
 		_, newlyAdded := oldTags[i]
 		if newlyAdded {
-			tagClient.IncreaseCount(ctx, &tagProto.IncreaseCountRequest{
+			_, err := tagClient.IncreaseCount(ctx, &tagProto.IncreaseCountRequest{
 				ParentID: parentID,
 				Type:     tagType,
 				Title:    i,
 			})
+			if err != nil {
+				logger.Errorf("Error increasing count for tag '%v' with type '%v' for parent '%v'", i, tagType, parentID)
+			}
 		}
 	}
 	return nil
