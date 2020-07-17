@@ -131,7 +131,7 @@ func (t *Posts) savePost(ctx context.Context, oldPost, post *Post) error {
 		return err
 	}
 	if oldPost == nil {
-		tagClient := tagProto.NewTagsService("go.micro.service.tag", t.Client)
+		tagClient := tagProto.NewTagsService("go.micro.service.tags", t.Client)
 		for _, tagName := range post.TagNames {
 			_, err := tagClient.IncreaseCount(ctx, &tagProto.IncreaseCountRequest{
 				ParentID: post.ID,
