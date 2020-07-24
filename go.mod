@@ -1,4 +1,4 @@
-module github.com/micro/services
+module github.com/micro/examples
 
 go 1.14
 
