@@ -135,7 +135,7 @@ func (t *Tags) List(ctx context.Context, req *pb.ListRequest, rsp *pb.ListRespon
 		return errors.BadRequest("tags.list.input-check", "parent id or type is required")
 	}
 
-	records, err := store.Read(key, gostore.ReadPrefix())
+	records, err := store.Read("", store.Prefix(key))
 	if err != nil {
 		return err
 	}
