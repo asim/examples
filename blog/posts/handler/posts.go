@@ -193,7 +193,7 @@ func (p *Posts) Query(ctx context.Context, req *pb.QueryRequest, rsp *pb.QueryRe
 	if len(req.Slug) > 0 {
 		key := fmt.Sprintf("%v:%v", slugPrefix, req.Slug)
 		logger.Infof("Reading post by slug: %v", req.Slug)
-		records, err = store.Read(key, gostore.ReadPrefix())
+		records, err = store.Read("", store.Prefix(key))
 	} else {
 		key := fmt.Sprintf("%v:", timeStampPrefix)
 		var limit uint
@@ -202,9 +202,9 @@ func (p *Posts) Query(ctx context.Context, req *pb.QueryRequest, rsp *pb.QueryRe
 			limit = uint(req.Limit)
 		}
 		logger.Infof("Listing posts, offset: %v, limit: %v", req.Offset, limit)
-		records, err = store.Read(key, gostore.ReadPrefix(),
-			gostore.ReadOffset(uint(req.Offset)),
-			gostore.ReadLimit(limit))
+		records, err = store.Read("", store.Prefix(key),
+			store.Offset(uint(req.Offset)),
+			store.Limit(limit))
 	}
 
 	if err != nil {
