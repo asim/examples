@@ -1,4 +1,4 @@
-# Micro services
+# Micro Services
 
 This repo includes reusable micro services.
 
@@ -28,10 +28,6 @@ micro login
 # run the service
 micro run github.com/micro/services/helloworld
 ```
-
-## Legacy
-
-For v2 usage please see [go-micro](https://go-micro.dev).
 
 ## Contributing
 
