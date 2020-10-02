@@ -14,4 +14,3 @@ func (c *Comments) Save(ctx context.Context, req *pb.Request, rsp *pb.Response) 
 	logger.Info("Not yet implemented")
 	return nil
 }
-
