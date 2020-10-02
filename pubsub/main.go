@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/micro/micro/v3/service"
+	"github.com/micro/micro/v3/service/logger"
 	pb "github.com/micro/services/pubsub/proto"
 )
 
@@ -14,10 +15,13 @@ func Pub() {
 	ev := service.NewEvent("messages")
 
 	for {
-		ev.Publish(context.TODO(), &pb.Message{
-			Id: "1",
+		err := ev.Publish(context.TODO(), &pb.Message{
+			Id:   "1",
 			Body: []byte(`hello`),
 		})
+		if err != nil {
+			logger.Error("Error Publish:", err.Error())
+		}
 
 		time.Sleep(time.Second)
 	}
